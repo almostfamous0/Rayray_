@@ -1,0 +1,413 @@
+/* =========================================================
+   MEU BLOG — estilos globais (tema escuro quente)
+   Para mudar o visual do site inteiro, edite as variáveis abaixo.
+   ========================================================= */
+:root {
+  --fundo:      #17100e;   /* fundo principal (marrom quase preto) */
+  --cacau:      #211613;   /* faixas e seções alternadas */
+  --superficie: #2a1b18;   /* cartões */
+  --linha:      #43302a;   /* bordas e divisões */
+  --texto:      #eadfd5;   /* texto principal (creme) */
+  --suave:      #b9a698;   /* texto secundário */
+  --vinho:      #5b2220;
+  --ferrugem:   #a8483a;   /* vermelho-marrom de destaque */
+  --cobre:      #d09a6a;   /* detalhes, links e botões */
+
+  --fonte-titulo: "Fraunces", Georgia, "Times New Roman", serif;
+  --fonte-texto:  "Newsreader", Georgia, serif;
+  --fonte-menu:   "Work Sans", Arial, sans-serif;
+
+  --largura-texto: 40rem;
+  --largura-site:  68rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; color-scheme: dark; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+::selection { background: var(--ferrugem); color: #fff; }
+
+body {
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  background:
+    radial-gradient(46rem 34rem at 100% 40%, rgba(168, 72, 58, 0.14), transparent 55%),
+    radial-gradient(40rem 30rem at 0% 75%, rgba(208, 154, 106, 0.07), transparent 60%),
+    var(--fundo);
+}
+/* textura leve sobre o site todo */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: var(--cobre); }
+a:focus-visible, button:focus-visible, .btn:focus-visible, .painel:focus-visible {
+  outline: 3px solid var(--cobre);
+  outline-offset: 3px;
+}
+.pular { position: absolute; left: -999px; }
+.pular:focus {
+  left: 1rem; top: 1rem; z-index: 300;
+  background: var(--cobre); color: #1a0f0c;
+  padding: 0.5rem 1rem; border-radius: 4px; font-family: var(--fonte-menu);
+}
+
+/* ---------- Barra de progresso de leitura ---------- */
+#progresso {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--ferrugem), var(--cobre));
+}
+
+/* ---------- Cabeçalho fixo ---------- */
+.topo {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(23, 16, 14, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--linha);
+  padding: 0.9rem 1.5rem;
+}
+.topo__interno {
+  max-width: var(--largura-site); margin: 0 auto;
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 0.5rem 2rem;
+}
+.logo {
+  display: inline-flex; align-items: center; gap: 0.65rem;
+  font-family: var(--fonte-titulo); font-size: 1.3rem; font-weight: 600;
+  color: var(--texto); text-decoration: none;
+}
+.logo::before {
+  content: ""; width: 0.95rem; height: 0.95rem; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f3d9bd, var(--cobre));
+  box-shadow: 0 0 0 4px rgba(208, 154, 106, 0.18);
+}
+.menu { display: flex; gap: 1.75rem; flex-wrap: wrap; }
+.menu a {
+  font-family: var(--fonte-menu); font-size: 0.95rem;
+  color: var(--suave); text-decoration: none;
+  padding-bottom: 2px; border-bottom: 2px solid transparent;
+}
+.menu a:hover { color: var(--texto); }
+.menu a[aria-current="page"] { color: var(--texto); border-bottom-color: var(--cobre); }
+.menu-toggle {
+  display: none; background: none; cursor: pointer;
+  border: 1px solid var(--linha); border-radius: 6px;
+  color: var(--texto); font-family: var(--fonte-menu); font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* ---------- Onda de transição ---------- */
+.onda { position: absolute; left: 0; bottom: -1px; width: 100%; height: 4.5rem; display: block; }
+.onda path { fill: var(--fundo); }
+
+/* ---------- Etiqueta de categoria ---------- */
+.tag {
+  display: inline-block; align-self: flex-start;
+  font-family: var(--fonte-menu); font-size: 0.8rem;
+  color: var(--cobre); border: 1px solid rgba(208, 154, 106, 0.5);
+  border-radius: 999px; padding: 0.15rem 0.75rem; line-height: 1.6;
+}
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-block; font-family: var(--fonte-menu); font-weight: 600; font-size: 1rem;
+  background: var(--cobre); color: #1a0f0c;
+  padding: 0.85rem 1.75rem; border-radius: 4px; text-decoration: none;
+  border: 1px solid var(--cobre); transition: background 0.2s;
+}
+.btn:hover { background: #e0b080; }
+.btn--sec { background: transparent; color: var(--texto); border-color: rgba(234, 223, 213, 0.4); }
+.btn--sec:hover { background: rgba(234, 223, 213, 0.1); }
+
+/* ---------- Seção principal (home) ---------- */
+.hero {
+  position: relative; overflow: hidden; color: var(--texto);
+  padding: 7rem 1.5rem 10rem;
+  background:
+    radial-gradient(40rem 30rem at 85% 15%, rgba(208, 154, 106, 0.22), transparent 65%),
+    radial-gradient(30rem 24rem at 5% 100%, rgba(168, 72, 58, 0.3), transparent 60%),
+    linear-gradient(160deg, #5a2220 0%, #35171a 45%, var(--fundo) 100%);
+}
+.hero::before { /* estrelas discretas */
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.7;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 18%,  #f3d9bd, transparent),
+    radial-gradient(1px   1px   at 17% 62%, #f3d9bd, transparent),
+    radial-gradient(1.5px 1.5px at 29% 34%, #f3d9bd, transparent),
+    radial-gradient(1px   1px   at 41% 80%, #f3d9bd, transparent),
+    radial-gradient(1.5px 1.5px at 52% 14%, #f3d9bd, transparent),
+    radial-gradient(1px   1px   at 63% 48%, #f3d9bd, transparent),
+    radial-gradient(1.5px 1.5px at 74% 74%, #f3d9bd, transparent),
+    radial-gradient(1px   1px   at 91% 40%, #f3d9bd, transparent),
+    radial-gradient(1px   1px   at 96% 86%, #f3d9bd, transparent);
+}
+.hero__orbitas {
+  position: absolute; right: -5rem; top: 50%; transform: translateY(-50%);
+  width: min(34rem, 70vw); pointer-events: none;
+}
+.hero__interno { position: relative; max-width: var(--largura-site); margin: 0 auto; }
+.hero h1 {
+  font-family: var(--fonte-titulo); font-weight: 700;
+  font-size: clamp(2.75rem, 9vw, 6.5rem); line-height: 1; letter-spacing: -0.02em;
+  max-width: 12ch; margin-bottom: 1.75rem;
+}
+.hero p { font-size: 1.3rem; max-width: 34rem; color: #e6cdbb; margin-bottom: 2.25rem; }
+.hero__acoes { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+/* entrada suave: acontece uma vez, ao abrir a página */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__interno > *, .capa__interno > * { animation: subir 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  .hero__interno > :nth-child(2), .capa__interno > :nth-child(2) { animation-delay: 0.12s; }
+  .hero__interno > :nth-child(3), .capa__interno > :nth-child(3) { animation-delay: 0.24s; }
+  .capa__interno > :nth-child(4) { animation-delay: 0.36s; }
+}
+@keyframes subir { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Perguntas (home) ---------- */
+.perguntas { max-width: var(--largura-site); margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+.pergunta {
+  display: grid; grid-template-columns: minmax(10rem, 1fr) 2fr; gap: 1rem 3rem;
+  padding: 2.25rem 0; border-top: 1px solid var(--linha);
+}
+.pergunta h2 { font-family: var(--fonte-titulo); font-size: 1.6rem; line-height: 1.2; color: var(--cobre); }
+.pergunta p { max-width: var(--largura-texto); }
+
+/* ---------- Faixa de citação (home) ---------- */
+.citacao {
+  position: relative; overflow: hidden; margin: 2rem 0; padding: 6.5rem 1.5rem 5.5rem;
+  text-align: center;
+  background:
+    radial-gradient(34rem 20rem at 18% 0%, rgba(208, 154, 106, 0.18), transparent 60%),
+    radial-gradient(28rem 18rem at 90% 100%, rgba(168, 72, 58, 0.35), transparent 60%),
+    linear-gradient(120deg, #3a1614, #5b2220 60%, var(--cacau));
+}
+.citacao::before {
+  content: "\201C"; position: absolute; left: 50%; top: 0.5rem; transform: translateX(-50%);
+  font-family: var(--fonte-titulo); font-size: 9rem; line-height: 1;
+  color: var(--cobre); opacity: 0.3;
+}
+.citacao blockquote {
+  position: relative; font-family: var(--fonte-titulo); font-weight: 600;
+  font-size: clamp(1.6rem, 4vw, 2.6rem); line-height: 1.3; max-width: 28ch; margin: 0 auto;
+}
+.citacao cite {
+  display: block; margin-top: 1.5rem; font-family: var(--fonte-menu);
+  font-size: 0.95rem; font-style: normal; color: var(--cobre);
+}
+
+/* ---------- Textos em destaque (home) ---------- */
+.textos { max-width: var(--largura-site); margin: 0 auto; padding: 3rem 1.5rem 5rem; scroll-margin-top: 4rem; }
+.textos > h2, .vizinhos > h2 { font-family: var(--fonte-titulo); font-size: 2rem; margin-bottom: 1.5rem; }
+.textos__grade {
+  display: grid; grid-template-columns: 1.35fr 1fr;
+  grid-template-rows: repeat(2, minmax(11rem, auto)); gap: 1.25rem;
+}
+.painel {
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  gap: 0.35rem; padding: 1.75rem; border-radius: 10px;
+  border: 1px solid rgba(234, 223, 213, 0.08);
+  color: var(--texto); text-decoration: none; background: var(--painel-fundo);
+}
+.painel:first-child { grid-row: span 2; min-height: 22rem; }
+.painel::before { /* letra grande ao fundo */
+  content: attr(data-letra); position: absolute; top: -1.5rem; right: 1.25rem;
+  font-family: var(--fonte-titulo); font-weight: 700; font-size: 10rem; line-height: 1;
+  color: rgba(234, 223, 213, 0.07);
+}
+.painel .tag { margin-bottom: auto; position: relative; }
+.painel strong { position: relative; font-family: var(--fonte-titulo); font-size: 1.75rem; line-height: 1.2; }
+.painel:first-child strong { font-size: 2.5rem; }
+.painel__resumo { position: relative; color: #e6cdbb; }
+.painel__data { position: relative; font-family: var(--fonte-menu); font-size: 0.85rem; color: var(--suave); }
+.painel:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+.painel--respeito     { --painel-fundo: linear-gradient(150deg, #7a2e26, #3a1614); }
+.painel--lealdade     { --painel-fundo: linear-gradient(150deg, #5e3b28, #25160f); }
+.painel--cumplicidade { --painel-fundo: linear-gradient(150deg, #86373a, #41191a); }
+
+/* ---------- Sobre mim (home) ---------- */
+.sobre { background: var(--cacau); border-top: 1px solid var(--linha); border-bottom: 1px solid var(--linha); padding: 5rem 1.5rem; scroll-margin-top: 3rem; }
+.sobre__interno {
+  max-width: var(--largura-site); margin: 0 auto;
+  display: grid; grid-template-columns: auto 1fr; gap: 2rem 3.5rem; align-items: center;
+}
+.sobre h2 { font-family: var(--fonte-titulo); font-size: 2rem; margin-bottom: 0.75rem; }
+.sobre p { max-width: var(--largura-texto); margin-bottom: 1.5rem; color: #d8c9bc; }
+.links-sociais { display: flex; flex-wrap: wrap; gap: 0.75rem; list-style: none; }
+.links-sociais a {
+  display: inline-block; font-family: var(--fonte-menu); font-size: 0.95rem;
+  color: var(--texto); text-decoration: none;
+  border: 1px solid var(--linha); border-radius: 999px; padding: 0.4rem 1.1rem;
+}
+.links-sociais a:hover { border-color: var(--cobre); color: var(--cobre); }
+
+/* ---------- Avatar ---------- */
+.avatar {
+  display: inline-grid; place-items: center; flex: none; overflow: hidden;
+  width: 3rem; height: 3rem; border-radius: 50%;
+  background: linear-gradient(145deg, var(--cobre), var(--ferrugem));
+  color: #1a0f0c; font-family: var(--fonte-titulo); font-weight: 700;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar--grande { width: 9rem; height: 9rem; font-size: 3rem; box-shadow: 0 0 0 8px rgba(208, 154, 106, 0.15); }
+
+/* ---------- Capa das páginas de texto ---------- */
+.tema-respeito     { --capa-a: #7a2e26; --capa-b: #1f0f0d; --capa-brilho: rgba(208, 154, 106, 0.28); }
+.tema-lealdade     { --capa-a: #5e3b28; --capa-b: #1b110c; --capa-brilho: rgba(217, 170, 110, 0.25); }
+.tema-cumplicidade { --capa-a: #86373a; --capa-b: #22100f; --capa-brilho: rgba(230, 150, 140, 0.25); }
+
+.capa {
+  position: relative; overflow: hidden; padding: 5rem 1.5rem 8rem;
+  background:
+    radial-gradient(28rem 20rem at 90% 5%, var(--capa-brilho), transparent 65%),
+    linear-gradient(160deg, var(--capa-a), var(--capa-b));
+}
+.capa::after { /* anéis decorativos */
+  content: ""; position: absolute; right: -7rem; top: -6rem; width: 20rem; aspect-ratio: 1;
+  border-radius: 50%; border: 1px solid rgba(234, 223, 213, 0.16); pointer-events: none;
+  box-shadow: 0 0 0 3rem rgba(234, 223, 213, 0.035), 0 0 0 6rem rgba(234, 223, 213, 0.025);
+}
+.capa__interno { position: relative; z-index: 1; max-width: var(--largura-texto); margin: 0 auto; }
+.capa h1 {
+  font-family: var(--fonte-titulo); font-size: clamp(2.5rem, 7vw, 4.25rem);
+  line-height: 1.05; letter-spacing: -0.02em; margin: 1rem 0 1.25rem;
+}
+.artigo__resumo { font-size: 1.35rem; font-style: italic; color: #e6cdbb; margin-bottom: 2rem; }
+.autoria { display: flex; align-items: center; gap: 0.9rem; font-family: var(--fonte-menu); font-size: 0.9rem; color: #d8c1b0; }
+.autoria strong { display: block; color: var(--texto); font-size: 1rem; }
+
+/* ---------- Texto da página ---------- */
+.artigo { max-width: var(--largura-texto); margin: 0 auto; padding: 3rem 1.5rem; font-size: 1.2rem; }
+.artigo p { margin-bottom: 1.5rem; }
+.artigo > p:first-of-type::first-letter { /* letra capitular */
+  float: left; font-family: var(--fonte-titulo); font-weight: 700; font-size: 4.4rem;
+  line-height: 0.85; padding: 0.35rem 0.6rem 0 0; color: var(--cobre);
+}
+.artigo h2 { font-family: var(--fonte-titulo); font-size: 1.7rem; color: var(--cobre); margin: 2.5rem 0 1rem; }
+.artigo a { text-underline-offset: 3px; }
+.artigo blockquote {
+  border-left: 3px solid var(--ferrugem); background: var(--superficie);
+  padding: 1.1rem 1.5rem; border-radius: 0 8px 8px 0; font-style: italic; margin: 2rem 0;
+}
+.artigo hr { /* divisor ornamental */
+  position: relative; height: 1rem; border: 0; margin: 3rem 0;
+  background: linear-gradient(var(--linha), var(--linha)) center / 100% 1px no-repeat;
+}
+.artigo hr::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 0.7rem; height: 0.7rem;
+  border-radius: 50%; background: var(--fundo); border: 2px solid var(--cobre);
+  transform: translate(-50%, -50%);
+}
+
+/* ---------- Vídeo ---------- */
+.video { margin: 2.5rem 0; }
+.video video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; background: #000; }
+.video figcaption { margin-top: 0.6rem; font-family: var(--fonte-menu); font-size: 0.9rem; color: var(--suave); }
+
+/* ---------- Compartilhar e caixa da autora ---------- */
+.compartilhar {
+  max-width: var(--largura-texto); margin: 0 auto; padding: 1.5rem;
+  border-top: 1px solid var(--linha); display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem;
+  font-family: var(--fonte-menu); font-size: 0.95rem; color: var(--suave);
+}
+.compartilhar a, .compartilhar button {
+  font: inherit; color: var(--texto); background: none; cursor: pointer; text-decoration: none;
+  border: 1px solid var(--linha); border-radius: 999px; padding: 0.35rem 1rem;
+}
+.compartilhar a:hover, .compartilhar button:hover { border-color: var(--cobre); color: var(--cobre); }
+
+.autor {
+  max-width: var(--largura-texto); margin: 1.5rem auto 0; padding: 1.5rem;
+  display: flex; gap: 1.25rem; align-items: center;
+  background: var(--superficie); border: 1px solid var(--linha); border-radius: 10px;
+}
+.autor .avatar { width: 4.5rem; height: 4.5rem; font-size: 1.5rem; }
+.autor strong { font-family: var(--fonte-titulo); font-size: 1.25rem; }
+.autor p { font-size: 1rem; line-height: 1.6; color: #d8c9bc; }
+
+/* ---------- Continue lendo ---------- */
+.vizinhos { max-width: var(--largura-site); margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+.vizinhos__grade { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.vizinho {
+  display: block; padding: 1.5rem; border-radius: 10px; text-decoration: none;
+  background: var(--superficie); border: 1px solid var(--linha); color: var(--texto);
+}
+.vizinho:hover { border-color: var(--cobre); }
+.vizinho small { display: block; font-family: var(--fonte-menu); font-size: 0.85rem; color: var(--suave); }
+.vizinho strong { font-family: var(--fonte-titulo); font-size: 1.5rem; color: var(--cobre); }
+.vizinho--prox { grid-column: 2; text-align: right; }
+
+/* ---------- Voltar ao topo ---------- */
+.topo-btn {
+  position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 150;
+  width: 2.9rem; height: 2.9rem; border-radius: 50%; cursor: pointer;
+  background: var(--cobre); color: #1a0f0c; border: 0; font-size: 1.2rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.topo-btn.visivel { opacity: 1; pointer-events: auto; }
+
+/* ---------- Rodapé ---------- */
+.rodape {
+  background-color: var(--fundo); border-top: 1px solid var(--linha);
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 20%, rgba(243, 217, 189, 0.5), transparent),
+    radial-gradient(1px   1px   at 38% 70%, rgba(243, 217, 189, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 66% 28%, rgba(243, 217, 189, 0.5), transparent),
+    radial-gradient(1px   1px   at 90% 60%, rgba(243, 217, 189, 0.4), transparent),
+    linear-gradient(#1a0f0c, #100907);
+  padding: 4rem 1.5rem 2rem; font-family: var(--fonte-menu); font-size: 0.95rem; color: var(--suave);
+}
+.rodape__grade {
+  max-width: var(--largura-site); margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem;
+}
+.rodape__marca { font-family: var(--fonte-titulo); font-size: 1.3rem; color: var(--texto); margin-bottom: 0.5rem; }
+.rodape h3 { font-family: var(--fonte-titulo); font-size: 1.05rem; color: var(--texto); margin-bottom: 0.75rem; }
+.rodape nav a { display: block; color: var(--suave); text-decoration: none; padding: 0.15rem 0; }
+.rodape nav a:hover { color: var(--cobre); }
+.rodape__copy {
+  max-width: var(--largura-site); margin: 3rem auto 0; padding-top: 1.5rem;
+  border-top: 1px solid var(--linha); font-size: 0.85rem;
+}
+
+/* ---------- Página 404 ---------- */
+.erro { text-align: center; padding: 8rem 1.5rem 9rem; }
+.erro h1 { font-family: var(--fonte-titulo); font-size: clamp(4rem, 14vw, 9rem); line-height: 1; color: var(--cobre); }
+.erro p { margin: 1rem 0 2rem; color: var(--suave); }
+
+/* ---------- Telas pequenas ---------- */
+@media (max-width: 900px) {
+  .textos__grade { grid-template-columns: 1fr; grid-template-rows: none; }
+  .painel:first-child { grid-row: auto; min-height: 16rem; }
+  .painel { min-height: 11rem; }
+  .rodape__grade { grid-template-columns: 1fr 1fr; }
+  .rodape__grade > :first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .menu-toggle { display: block; }
+  .menu { display: none; flex-basis: 100%; flex-direction: column; gap: 0.25rem; padding: 0.5rem 0 0.25rem; }
+  .menu.aberto { display: flex; }
+  .menu a { padding: 0.55rem 0; border-bottom: 0; }
+}
+@media (max-width: 640px) {
+  .hero { padding: 4.5rem 1.5rem 8rem; }
+  .hero__orbitas { right: -9rem; opacity: 0.35; }
+  .capa { padding: 3.5rem 1.5rem 7rem; }
+  .capa::after { opacity: 0.6; }
+  .pergunta { grid-template-columns: 1fr; }
+  .citacao { padding: 5rem 1.5rem 4rem; }
+  .sobre__interno { grid-template-columns: 1fr; }
+  .avatar--grande { width: 6.5rem; height: 6.5rem; font-size: 2.2rem; }
+  .vizinhos__grade { grid-template-columns: 1fr; }
+  .vizinho--prox { grid-column: auto; }
+  .autor { flex-direction: column; text-align: center; }
+}
